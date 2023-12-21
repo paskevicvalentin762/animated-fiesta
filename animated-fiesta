@@ -1,0 +1,15 @@
+            newState = media
+        case .changeVideoSettings(let action):
+            newState = changeSettings(in: newState, action: action)
+        case .changeMask(let action):
+            let maskSettings = maskSettingsReducer.reduce(newState?.maskSettings, action)
+            newState?.maskSettings = maskSettings
+        }
+protocol ShapeReducerProtocol {
+    mutating func reduce(_ currentState: ShapeData,
+                         _ action: ShapeModification) -> ShapeData
+}
+
+struct ShapeReducer: ShapeReducerProtocol {
+    
+    private(set) var mediaReducer: MediaReducerProtocol
